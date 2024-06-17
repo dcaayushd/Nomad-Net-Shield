@@ -6,9 +6,9 @@ import '../models/vpn_config.dart';
 
 class VpnEngine {
   ///Channel to native
-  static final String _eventChannelVpnStage = "vpnStage";
-  static final String _eventChannelVpnStatus = "vpnStatus";
-  static final String _methodChannelVpnControl = "vpnControl";
+  static const String _eventChannelVpnStage = "vpnStage";
+  static const String _eventChannelVpnStatus = "vpnStatus";
+  static const String _methodChannelVpnControl = "vpnControl";
 
   ///Snapshot of VPN Connection Stage
   static Stream<String> vpnStageSnapshot() =>
