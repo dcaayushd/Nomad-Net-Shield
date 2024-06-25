@@ -33,7 +33,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Nomad Net Shield',
       home: SplashScreen(),
-      // home: HomeScreen(),
+
+      // Theme
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          elevation: 3,
+        ),
+      ),
     );
   }
 }

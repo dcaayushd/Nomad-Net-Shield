@@ -1,6 +1,6 @@
 name: nomadnetshield
 description: Flutter VPN based on OpenVPN Library.
-publish_to: 'none'
+publish_to: "none"
 
 # App Version
 version: 1.0.0+1
@@ -10,6 +10,7 @@ environment:
 
 # App dependencies
 dependencies:
+  cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
   get: ^4.6.6
