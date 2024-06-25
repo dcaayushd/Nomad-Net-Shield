@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('OpenVPN Demo')),
+      appBar: AppBar(title: Text('Nomad Net Shield')),
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(20),
