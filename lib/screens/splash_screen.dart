@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/route_manager.dart';
 import 'package:nomadnetshield/main.dart';
 import 'package:nomadnetshield/screens/home_screen.dart';
 
@@ -15,14 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 1000), () {
+      // Exit full screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => HomeScreen(),
-        ),
-      );
+      // Navigate to home
+      Get.off(() => HomeScreen());
     });
   }
 

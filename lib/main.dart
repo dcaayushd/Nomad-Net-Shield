@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+
 import 'screens/splash_screen.dart';
 
 // GLobal object for accessing device screen size
@@ -7,7 +9,9 @@ late Size mq;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  // Enter Full Screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  // For setting orientation in portrait only
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -20,17 +24,12 @@ void main() {
   );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Nomad Net Shield',
       home: SplashScreen(),
