@@ -58,56 +58,57 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(20),
           physics: BouncingScrollPhysics(),
           child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Center(
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      shape: StadiumBorder(),
-                      backgroundColor: Theme.of(context).primaryColor,
-                    ),
-                    child: Text(
-                      _vpnState == VpnEngine.vpnDisconnected
-                          ? 'Connect VPN'
-                          : _vpnState.replaceAll("_", " ").toUpperCase(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: _connectClick,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: StadiumBorder(),
+                    backgroundColor: Theme.of(context).primaryColor,
                   ),
+                  child: Text(
+                    _vpnState == VpnEngine.vpnDisconnected
+                        ? 'Connect VPN'
+                        : _vpnState.replaceAll("_", " ").toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: _connectClick,
                 ),
-                StreamBuilder<VpnStatus?>(
-                  initialData: VpnStatus(),
-                  stream: VpnEngine.vpnStatusSnapshot(),
-                  builder: (context, snapshot) => Text(
-                      "${snapshot.data?.byteIn ?? ""}, ${snapshot.data?.byteOut ?? ""}",
-                      textAlign: TextAlign.center),
+              ),
+              StreamBuilder<VpnStatus?>(
+                initialData: VpnStatus(),
+                stream: VpnEngine.vpnStatusSnapshot(),
+                builder: (context, snapshot) => Text(
+                  "${snapshot.data?.byteIn ?? ""}, ${snapshot.data?.byteOut ?? ""}",
+                  textAlign: TextAlign.center,
                 ),
+              ),
 
-                //sample vpn list
-                Column(
-                    children: _listVpn
-                        .map(
-                          (e) => ListTile(
-                            title: Text(e.country),
-                            leading: SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: Center(
-                                  child: _selectedVpn == e
-                                      ? CircleAvatar(
-                                          backgroundColor: Colors.green)
-                                      : CircleAvatar(
-                                          backgroundColor: Colors.grey)),
-                            ),
-                            onTap: () {
-                              log("${e.country} is selected");
-                              setState(() => _selectedVpn = e);
-                            },
-                          ),
-                        )
-                        .toList())
-              ]),
+              //sample vpn list
+              Column(
+                children: _listVpn
+                    .map(
+                      (e) => ListTile(
+                        title: Text(e.country),
+                        leading: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: Center(
+                              child: _selectedVpn == e
+                                  ? CircleAvatar(backgroundColor: Colors.green)
+                                  : CircleAvatar(backgroundColor: Colors.grey)),
+                        ),
+                        onTap: () {
+                          log("${e.country} is selected");
+                          setState(() => _selectedVpn = e);
+                        },
+                      ),
+                    )
+                    .toList(),
+              )
+            ],
+          ),
         ),
       ),
     );
