@@ -10,6 +10,7 @@ environment:
 
 # App dependencies
 dependencies:
+  csv: ^6.0.0
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
