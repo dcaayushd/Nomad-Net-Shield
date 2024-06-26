@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nomadnetshield/apis/apis.dart';
+import 'package:nomadnetshield/controllers/location_controller.dart';
 
 import '../main.dart';
 
@@ -12,25 +14,48 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  final _controller = LocationController();
   @override
   void initState() {
     super.initState();
-    APIs.getVpnServer();
+    _controller.getVpnData();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text(
-          'VPN Locations',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: _loadingWidget(),
-    );
+    return Obx(() => Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            title: Text(
+              'VPN Locations (${_controller.vpnList.length})',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          body: _controller.isLoading.value
+              ? _loadingWidget()
+              : _controller.vpnList.isEmpty
+                  ? _noVPNFound()
+                  : _vpnData(),
+        ));
   }
+
+  _vpnData() => ListView.builder(
+        itemCount: _controller.vpnList.length,
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.only(
+          top: mq.height * .015,
+          bottom: mq.height * .1,
+          left: mq.width * .04,
+          right: mq.width * .04,
+        ),
+        itemBuilder: (ctx, i) => Text(_controller.vpnList[i].hostName),
+      );
 
   _loadingWidget() => SizedBox(
         width: double.infinity,
