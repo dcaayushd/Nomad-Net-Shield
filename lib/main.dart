@@ -29,14 +29,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Nomad Net Shield',
-      home: SplashScreen(),
+      home: const SplashScreen(),
 
       // Theme
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
           centerTitle: true,
           elevation: 3,
         ),

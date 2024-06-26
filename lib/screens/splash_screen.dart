@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/route_manager.dart';
-import 'package:nomadnetshield/main.dart';
-import 'package:nomadnetshield/screens/home_screen.dart';
+import '../main.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,11 +15,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 1000), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       // Exit full screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       // Navigate to home
-      Get.off(() => HomeScreen());
+      Get.off(() => const HomeScreen());
     });
   }
 
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Positioned(
             bottom: mq.height * .05,
             width: mq.width,
-            child: Text(
+            child: const Text(
               'MADE BY AAYUSH WITH ♡',
               textAlign: TextAlign.center,
               style: TextStyle(
