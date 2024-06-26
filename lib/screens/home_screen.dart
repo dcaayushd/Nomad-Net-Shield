@@ -8,6 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/route_manager.dart';
+import 'package:nomadnetshield/screens/location_screen.dart';
 import 'package:nomadnetshield/widgets/count_down_timer.dart';
 import 'package:nomadnetshield/widgets/home_card.dart';
 import '../main.dart';
@@ -267,36 +268,43 @@ class HomeScreenState extends State<HomeScreen> {
 }
 
 Widget _changeLocation() => SafeArea(
-      child: Container(
-        color: Colors.blue,
-        padding: EdgeInsets.symmetric(horizontal: mq.width * .04),
-        height: 60,
-        child: const Row(
-          children: [
-            Icon(
-              CupertinoIcons.globe,
-              color: Colors.white,
-              size: 28,
+      child: Semantics(
+        child: InkWell(
+          onTap: () => Get.to(
+            () => const LocationScreen(),
+          ),
+          child: Container(
+            color: Colors.blue,
+            padding: EdgeInsets.symmetric(horizontal: mq.width * .04),
+            height: 60,
+            child: const Row(
+              children: [
+                Icon(
+                  CupertinoIcons.globe,
+                  color: Colors.white,
+                  size: 28,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Change Location',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Spacer(),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.keyboard_arrow_right_rounded,
+                    color: Colors.blue,
+                    size: 26,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 10),
-            Text(
-              'Change Location',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Spacer(),
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.keyboard_arrow_right_rounded,
-                color: Colors.blue,
-                size: 26,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
