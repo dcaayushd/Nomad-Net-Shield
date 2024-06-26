@@ -9,7 +9,8 @@ class APIs {
   static Future<void> getVpnServer() async {
     final List<Vpn> vpnList = [];
 
-    final res = await get(Uri.parse('http://www.vpngate.net/api/iphone/'));
+   try{
+     final res = await get(Uri.parse('http://www.vpngate.net/api/iphone/'));
     final csvString = res.body.split('#')[1].replaceAll('*', '');
     List<List<dynamic>> list = const CsvToListConverter().convert(csvString);
     final header = list[0];
@@ -24,6 +25,10 @@ class APIs {
       vpnList.add(Vpn.fromJson(tempJson));
     }
     log(vpnList.first.hostName);
+   }
+catch(e){
+    log('\ngetVPNServers: $e');
+   }
     //  log(res.body);
   }
 }
