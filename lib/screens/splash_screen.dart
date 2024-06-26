@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Exit full screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       // Navigate to home
-      Get.off(() => const HomeScreen());
+      Get.off(() => HomeScreen());
     });
   }
 

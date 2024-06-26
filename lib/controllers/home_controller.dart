@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/vpn.dart';
+import '../models/vpn_config.dart';
 import '../services/vpn_engine.dart';
 
 class HomeController extends GetxController {
@@ -10,7 +13,30 @@ class HomeController extends GetxController {
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
   final RxBool startTimer = false.obs;
-  Future<void> initializeData() async {}
+  void connectToVpn() {
+    ///Stop right here if user not select a vpn
+    if (vpn.value.openVPNConfigDataBase64.isEmpty) return;
+
+    if (vpnState.value == VpnEngine.vpnDisconnected) {
+      final data =
+          const Base64Decoder().convert(vpn.value.openVPNConfigDataBase64);
+      final config = const Utf8Decoder().convert(data);
+      final vpnConfig = VpnConfig(
+        country: vpn.value.countryLong,
+        username: 'vpn',
+        password: 'vpn',
+        config: config,
+      );
+
+      ///Start if stage is disconnected
+      VpnEngine.startVpn(vpnConfig);
+      startTimer.value = true;
+    } else {
+      ///Stop if stage is "not" disconnected
+      startTimer.value = false;
+      VpnEngine.stopVpn();
+    }
+  }
 
   // VPN Button Color
   Color get getButtonColor {

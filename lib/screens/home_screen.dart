@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:nomadnetshield/screens/location_screen.dart';
 import 'package:nomadnetshield/widgets/count_down_timer.dart';
@@ -10,62 +8,22 @@ import 'package:nomadnetshield/widgets/home_card.dart';
 import '../controllers/home_controller.dart';
 import '../main.dart';
 
-import '../models/vpn_config.dart';
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  HomeScreenState createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
   final _controller = Get.put(HomeController());
-  List<VpnConfig> _listVpn = [];
-  VpnConfig? _selectedVpn;
 
   @override
-  void initState() {
-    super.initState();
-
+  Widget build(BuildContext context) {
     ///Add listener to update vpn state
     VpnEngine.vpnStageSnapshot().listen(
       (event) {
         _controller.vpnState.value = event;
       },
     );
-
-    initVpn();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void initVpn() async {
-    //sample vpn config file (you can get more from https://www.vpngate.net/)
-    _listVpn.add(VpnConfig(
-        config: await rootBundle.loadString('assets/vpn/japan.ovpn'),
-        country: 'Japan',
-        username: 'vpn',
-        password: 'vpn'));
-
-    _listVpn.add(VpnConfig(
-        config: await rootBundle.loadString('assets/vpn/thailand.ovpn'),
-        country: 'Thailand',
-        username: 'vpn',
-        password: 'vpn'));
-
-    SchedulerBinding.instance.addPostFrameCallback(
-        (t) => setState(() => _selectedVpn = _listVpn.first));
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -191,21 +149,6 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _connectClick() {
-    ///Stop right here if user not select a vpn
-    if (_selectedVpn == null) return;
-
-    if (_controller.vpnState.value == VpnEngine.vpnDisconnected) {
-      ///Start if stage is disconnected
-      VpnEngine.startVpn(_selectedVpn!);
-    } else {
-      ///Stop if stage is "not" disconnected
-      _controller.startTimer.value = !_controller.startTimer.value;
-
-      VpnEngine.stopVpn();
-    }
-  }
-
   // VPN Button
   Widget _vpnButton() => Column(
         children: [
@@ -214,7 +157,7 @@ class HomeScreenState extends State<HomeScreen> {
             button: true,
             child: InkWell(
               onTap: () {
-                _connectClick();
+                _controller.connectToVpn();
               },
               borderRadius: BorderRadius.circular(100),
               child: Container(
@@ -297,7 +240,7 @@ Widget _changeLocation() => SafeArea(
       child: Semantics(
         child: InkWell(
           onTap: () => Get.to(
-            () => const LocationScreen(),
+            () => LocationScreen(),
           ),
           child: Container(
             color: Colors.blue,
@@ -334,54 +277,3 @@ Widget _changeLocation() => SafeArea(
         ),
       ),
     );
-
-
-// !Future work
-// Center(
-//             child: TextButton(
-//               style: TextButton.styleFrom(
-//                 shape: const StadiumBorder(),
-//                 backgroundColor: Theme.of(context).primaryColor,
-//               ),
-//               onPressed: _connectClick,
-//               child: Text(
-//                 _controller.vpnState.value == VpnEngine.vpnDisconnected
-//                     ? 'Connect VPN'
-//                     : _controller.vpnState.value.replaceAll("_", " ").toUpperCase(),
-//                 style: const TextStyle(color: Colors.white),
-//               ),
-//             ),
-//           ),
-//           StreamBuilder<VpnStatus?>(
-//             initialData: VpnStatus(),
-//             stream: VpnEngine.vpnStatusSnapshot(),
-//             builder: (context, snapshot) => Text(
-//               "${snapshot.data?.byteIn ?? ""}, ${snapshot.data?.byteOut ?? ""}",
-//               textAlign: TextAlign.center,
-//             ),
-//           ),
-
-//           //sample vpn list
-//           Column(
-//             children: _listVpn
-//                 .map(
-//                   (e) => ListTile(
-//                     title: Text(e.country),
-//                     leading: SizedBox(
-//                       height: 20,
-//                       width: 20,
-//                       child: Center(
-//                           child: _selectedVpn == e
-//                               ? const CircleAvatar(
-//                                   backgroundColor: Colors.green)
-//                               : const CircleAvatar(
-//                                   backgroundColor: Colors.grey)),
-//                     ),
-//                     onTap: () {
-//                       log("${e.country} is selected");
-//                       setState(() => _selectedVpn = e);
-//                     },
-//                   ),
-//                 )
-//                 .toList(),
-//           )
