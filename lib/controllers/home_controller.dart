@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../models/vpn.dart';
 import '../services/vpn_engine.dart';
 
 class HomeController extends GetxController {
+  final Rx<Vpn> vpn = Vpn.fromJson({}).obs;
+
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
   final RxBool startTimer = false.obs;
@@ -28,7 +31,7 @@ class HomeController extends GetxController {
     switch (vpnState.value) {
       case VpnEngine.vpnDisconnected:
         return 'Tap to Connect';
-        
+
       case VpnEngine.vpnConnected:
         return 'Disconnect';
 

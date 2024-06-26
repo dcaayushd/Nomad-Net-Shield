@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  final _controller = HomeController();
+  final _controller = Get.put(HomeController());
   List<VpnConfig> _listVpn = [];
   VpnConfig? _selectedVpn;
 
@@ -107,36 +107,49 @@ class HomeScreenState extends State<HomeScreen> {
           Obx(
             () => _vpnButton(),
           ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              HomeCard(
-                title: 'Country',
-                subtitle: 'FREE',
-                icon: CircleAvatar(
-                  backgroundColor: Colors.blue,
-                  radius: 30,
-                  child: Icon(
-                    Icons.vpn_lock,
-                    color: Colors.white,
-                    size: 30,
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HomeCard(
+                  title: _controller.vpn.value.countryLong.isEmpty
+                      ? 'Country'
+                      : _controller.vpn.value.countryLong,
+                  subtitle: 'FREE',
+                  icon: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    radius: 30,
+                    backgroundImage: _controller.vpn.value.countryLong.isEmpty
+                        ? null
+                        : AssetImage(
+                            'assets/flags/${_controller.vpn.value.countryShort.toLowerCase()}.png',
+                          ),
+                    child: _controller.vpn.value.countryLong.isEmpty
+                        ? const Icon(
+                            Icons.vpn_lock,
+                            color: Colors.white,
+                            size: 30,
+                          )
+                        : null,
                   ),
                 ),
-              ),
-              HomeCard(
-                title: '0 ms',
-                subtitle: 'PING',
-                icon: CircleAvatar(
-                  backgroundColor: Colors.orange,
-                  radius: 30,
-                  child: Icon(
-                    Icons.bar_chart,
-                    color: Colors.white,
-                    size: 30,
+                HomeCard(
+                  title: _controller.vpn.value.countryLong.isEmpty
+                      ? '0 ms'
+                      : '${_controller.vpn.value.ping} ms',
+                  subtitle: 'PING',
+                  icon: const CircleAvatar(
+                    backgroundColor: Colors.orange,
+                    radius: 30,
+                    child: Icon(
+                      Icons.bar_chart,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           StreamBuilder<VpnStatus?>(
             initialData: VpnStatus(),
@@ -161,7 +174,7 @@ class HomeScreenState extends State<HomeScreen> {
                   title: snapshot.data?.byteOut ?? '0 kbps',
                   subtitle: 'UPLOAD',
                   icon: const CircleAvatar(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: Colors.blue,
                     radius: 30,
                     child: Icon(
                       Icons.arrow_upward,
