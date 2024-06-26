@@ -2,11 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../main.dart';
 import '../models/vpn.dart';
-import '../services/vpn_engine.dart';
 
 class VpnCard extends StatelessWidget {
   final Vpn vpn;

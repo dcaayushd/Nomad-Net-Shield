@@ -1,16 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/route_manager.dart';
 import 'package:nomadnetshield/screens/location_screen.dart';
 import 'package:nomadnetshield/widgets/count_down_timer.dart';
 import 'package:nomadnetshield/widgets/home_card.dart';
+import '../controllers/home_controller.dart';
 import '../main.dart';
 
 import '../models/vpn_config.dart';
@@ -25,20 +22,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  String _vpnState = VpnEngine.vpnDisconnected;
+  final _controller = HomeController();
   List<VpnConfig> _listVpn = [];
   VpnConfig? _selectedVpn;
-  final RxBool _startTimer = false.obs;
+
   @override
   void initState() {
     super.initState();
 
     ///Add listener to update vpn state
-    VpnEngine.vpnStageSnapshot().listen((event) {
-      setState(() => _vpnState = event);
-    });
+    VpnEngine.vpnStageSnapshot().listen(
+      (event) {
+        _controller.vpnState.value = event;
+      },
+    );
 
     initVpn();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void initVpn() async {
@@ -99,8 +104,9 @@ class HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // VPN Button
-          _vpnButton(),
-
+          Obx(
+            () => _vpnButton(),
+          ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -132,37 +138,40 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              HomeCard(
-                title: '0 kbps',
-                subtitle: 'DOWNLOAD',
-                icon: CircleAvatar(
-                  backgroundColor: Colors.green,
-                  radius: 30,
-                  child: Icon(
-                    Icons.arrow_downward,
-                    color: Colors.white,
-                    size: 30,
+          StreamBuilder<VpnStatus?>(
+            initialData: VpnStatus(),
+            stream: VpnEngine.vpnStatusSnapshot(),
+            builder: (context, snapshot) => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HomeCard(
+                  title: snapshot.data?.byteIn ?? '0 kbps',
+                  subtitle: 'DOWNLOAD',
+                  icon: const CircleAvatar(
+                    backgroundColor: Colors.green,
+                    radius: 30,
+                    child: Icon(
+                      Icons.arrow_downward,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                   ),
                 ),
-              ),
-              HomeCard(
-                title: '0 kbps',
-                subtitle: 'UPLOAD',
-                icon: CircleAvatar(
-                  backgroundColor: Colors.orange,
-                  radius: 30,
-                  child: Icon(
-                    Icons.arrow_upward,
-                    color: Colors.white,
-                    size: 30,
+                HomeCard(
+                  title: snapshot.data?.byteOut ?? '0 kbps',
+                  subtitle: 'UPLOAD',
+                  icon: const CircleAvatar(
+                    backgroundColor: Colors.orange,
+                    radius: 30,
+                    child: Icon(
+                      Icons.arrow_upward,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -173,11 +182,13 @@ class HomeScreenState extends State<HomeScreen> {
     ///Stop right here if user not select a vpn
     if (_selectedVpn == null) return;
 
-    if (_vpnState == VpnEngine.vpnDisconnected) {
+    if (_controller.vpnState.value == VpnEngine.vpnDisconnected) {
       ///Start if stage is disconnected
       VpnEngine.startVpn(_selectedVpn!);
     } else {
       ///Stop if stage is "not" disconnected
+      _controller.startTimer.value = !_controller.startTimer.value;
+
       VpnEngine.stopVpn();
     }
   }
@@ -190,40 +201,40 @@ class HomeScreenState extends State<HomeScreen> {
             button: true,
             child: InkWell(
               onTap: () {
-                _startTimer.value = !_startTimer.value;
+                _connectClick();
               },
               borderRadius: BorderRadius.circular(100),
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.blue.withOpacity(.1),
+                  color: _controller.getButtonColor.withOpacity(.1),
                 ),
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.blue.withOpacity(.3),
+                    color: _controller.getButtonColor.withOpacity(.3),
                   ),
                   child: Container(
                     width: mq.height * .14,
                     height: mq.height * .14,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.blue,
+                      color: _controller.getButtonColor,
                     ),
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           CupertinoIcons.power,
                           size: 28,
                           color: Colors.white,
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
-                          'Tap to Connect',
-                          style: TextStyle(
+                          _controller.getButtonText,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12.5,
                             fontWeight: FontWeight.w500,
@@ -251,9 +262,11 @@ class HomeScreenState extends State<HomeScreen> {
               color: Colors.blue,
               borderRadius: BorderRadius.circular(15),
             ),
-            child: const Text(
-              'Not Connected',
-              style: TextStyle(
+            child: Text(
+              _controller.vpnState.value == VpnEngine.vpnDisconnected
+                  ? 'Not Connected'
+                  : _controller.vpnState.replaceAll('_', '').toUpperCase(),
+              style: const TextStyle(
                 fontSize: 12.5,
                 color: Colors.white,
               ),
@@ -261,7 +274,7 @@ class HomeScreenState extends State<HomeScreen> {
           ),
           // Countdown Timer
           Obx(
-            () => CountDownTimer(startTimer: _startTimer.value),
+            () => CountDownTimer(startTimer: _controller.startTimer.value),
           ),
         ],
       );
@@ -319,9 +332,9 @@ Widget _changeLocation() => SafeArea(
 //               ),
 //               onPressed: _connectClick,
 //               child: Text(
-//                 _vpnState == VpnEngine.vpnDisconnected
+//                 _controller.vpnState.value == VpnEngine.vpnDisconnected
 //                     ? 'Connect VPN'
-//                     : _vpnState.replaceAll("_", " ").toUpperCase(),
+//                     : _controller.vpnState.value.replaceAll("_", " ").toUpperCase(),
 //                 style: const TextStyle(color: Colors.white),
 //               ),
 //             ),

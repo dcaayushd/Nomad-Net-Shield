@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nomadnetshield/apis/apis.dart';
+
 import 'package:nomadnetshield/controllers/location_controller.dart';
 import 'package:nomadnetshield/widgets/vpn_card.dart';
 
