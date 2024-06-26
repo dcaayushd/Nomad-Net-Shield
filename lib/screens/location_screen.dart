@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nomadnetshield/apis/apis.dart';
 import 'package:nomadnetshield/controllers/location_controller.dart';
+import 'package:nomadnetshield/widgets/vpn_card.dart';
 
 import '../main.dart';
 
@@ -54,7 +55,9 @@ class _LocationScreenState extends State<LocationScreen> {
           left: mq.width * .04,
           right: mq.width * .04,
         ),
-        itemBuilder: (ctx, i) => Text(_controller.vpnList[i].hostName),
+        itemBuilder: (ctx, i) => VpnCard(
+          vpn: _controller.vpnList[i],
+        ),
       );
 
   _loadingWidget() => SizedBox(

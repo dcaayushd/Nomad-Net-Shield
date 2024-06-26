@@ -28,6 +28,7 @@ class APIs {
     } catch (e) {
       log('\ngetVPNServers: $e');
     }
+    vpnList.shuffle();
     return vpnList;
     //  log(res.body);
   }
