@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/route_manager.dart';
+import 'package:nomadnetshield/widgets/count_down_timer.dart';
 import 'package:nomadnetshield/widgets/home_card.dart';
 import '../main.dart';
 
@@ -24,7 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
   String _vpnState = VpnEngine.vpnDisconnected;
   List<VpnConfig> _listVpn = [];
   VpnConfig? _selectedVpn;
-
+  final RxBool _startTimer = false.obs;
   @override
   void initState() {
     super.initState();
@@ -92,13 +95,8 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: _changeLocation(),
       body: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(
-            height: mq.height * .02,
-            width: double.maxFinite,
-          ),
-
           // VPN Button
           _vpnButton(),
 
@@ -133,7 +131,6 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          SizedBox(height: mq.height * .02),
 
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +188,9 @@ class HomeScreenState extends State<HomeScreen> {
           Semantics(
             button: true,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                _startTimer.value = !_startTimer.value;
+              },
               borderRadius: BorderRadius.circular(100),
               child: Container(
                 padding: const EdgeInsets.all(16),
@@ -258,6 +257,10 @@ class HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
               ),
             ),
+          ),
+          // Countdown Timer
+          Obx(
+            () => CountDownTimer(startTimer: _startTimer.value),
           ),
         ],
       );
