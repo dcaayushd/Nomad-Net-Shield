@@ -12,7 +12,7 @@ class HomeController extends GetxController {
 
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
-  final RxBool startTimer = false.obs;
+
   void connectToVpn() {
     ///Stop right here if user not select a vpn
     if (vpn.value.openVPNConfigDataBase64.isEmpty) return;
@@ -30,10 +30,10 @@ class HomeController extends GetxController {
 
       ///Start if stage is disconnected
       VpnEngine.startVpn(vpnConfig);
-      startTimer.value = true;
+
     } else {
       ///Stop if stage is "not" disconnected
-      startTimer.value = false;
+
       VpnEngine.stopVpn();
     }
   }

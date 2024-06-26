@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Nomad Net Shield',
       home: const SplashScreen(),
-
       // Theme
       theme: ThemeData(
         primarySwatch: Colors.blue,

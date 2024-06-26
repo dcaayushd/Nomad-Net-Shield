@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -13,8 +14,6 @@ class LocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _controller.getVpnData();
-
     return Obx(() => Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blue,
@@ -23,6 +22,23 @@ class LocationScreen extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
             ),
           ),
+
+          // Refresh Button
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(
+              bottom: 10,
+              right: 10,
+            ),
+            child: FloatingActionButton(
+              backgroundColor: Colors.blue,
+              onPressed: () => _controller.getVpnData(),
+              child: const Icon(
+                CupertinoIcons.refresh,
+                color: Colors.white,
+              ),
+            ),
+          ),
+
           body: _controller.isLoading.value
               ? _loadingWidget()
               : _controller.vpnList.isEmpty

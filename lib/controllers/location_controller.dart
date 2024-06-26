@@ -10,7 +10,7 @@ class LocationController extends GetxController {
 
   Future<void> getVpnData() async {
     isLoading.value = true;
-    // vpnList.clear();
+    vpnList.clear();
     vpnList = await APIs.getVpnServers();
     isLoading.value = false;
   }
