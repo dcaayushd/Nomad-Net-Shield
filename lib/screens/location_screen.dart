@@ -17,6 +17,7 @@ class LocationScreen extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
+          foregroundColor: Colors.white,
           title: Text(
             'VPN Locations (${_controller.vpnList.length})',
             style: const TextStyle(
