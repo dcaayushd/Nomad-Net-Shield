@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nomadnetshield/helpers/my_dialogs.dart';
+// import 'package:nomadnetshield/helpers/my_dialogs.dart';
 import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/services/vpn_engine.dart';
 
