@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:csv/csv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:nomadnetshield/helpers/my_dialogs.dart';
 import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/models/vpn.dart';
 
@@ -31,6 +32,7 @@ class APIs {
         vpnList.add(Vpn.fromJson(tempJson));
       }
     } catch (e) {
+      MyDialogs.error(msg: e.toString());
       log('\ngetVPNServers: $e');
     }
     vpnList.shuffle();
@@ -45,6 +47,7 @@ class APIs {
       log(data.toString());
       ipData.value = IPDetails.fromJson(data);
     } catch (e) {
+      MyDialogs.error(msg: e.toString());
       log('\ngetIPDetail : $e');
     }
   }

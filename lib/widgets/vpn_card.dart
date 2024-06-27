@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nomadnetshield/helpers/my_dialogs.dart';
 import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/services/vpn_engine.dart';
 
@@ -30,6 +31,7 @@ class VpnCard extends StatelessWidget {
           controller.vpn.value = vpn;
           Pref.vpn = vpn;
           Get.back();
+          MyDialogs.success(msg: 'Connecting VPN Location');
           if (controller.vpnState.value == VpnEngine.vpnConnected) {
             VpnEngine.stopVpn();
             Future.delayed(

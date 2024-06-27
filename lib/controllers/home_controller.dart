@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nomadnetshield/helpers/my_dialogs.dart';
 import 'package:nomadnetshield/helpers/pref.dart';
 
 import '../models/vpn.dart';
@@ -13,10 +14,12 @@ class HomeController extends GetxController {
 
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
-
   void connectToVpn() {
     ///Stop right here if user not select a vpn
-    if (vpn.value.openVPNConfigDataBase64.isEmpty) return;
+    if (vpn.value.openVPNConfigDataBase64.isEmpty) {
+      MyDialogs.info(msg: 'Select a location by clicking  \'Change Location\'');
+      return;
+    }
 
     if (vpnState.value == VpnEngine.vpnDisconnected) {
       final data =
@@ -31,10 +34,8 @@ class HomeController extends GetxController {
 
       ///Start if stage is disconnected
       VpnEngine.startVpn(vpnConfig);
-
     } else {
       ///Stop if stage is "not" disconnected
-
       VpnEngine.stopVpn();
     }
   }
