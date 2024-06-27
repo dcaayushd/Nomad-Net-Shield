@@ -31,4 +31,14 @@ class MyDialogs {
           : Colors.white.withOpacity(.9),
     );
   }
+
+  static showProgress() {
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+        ),
+      ),
+    );
+  }
 }
