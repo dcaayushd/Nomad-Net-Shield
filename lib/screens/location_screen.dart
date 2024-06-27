@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nomadnetshield/controllers/location_controller.dart';
 import 'package:nomadnetshield/widgets/vpn_card.dart';
 
+import '../helpers/pref.dart';
 import '../main.dart';
 
 class LocationScreen extends StatelessWidget {
@@ -18,7 +19,6 @@ class LocationScreen extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: Text(
             'VPN Locations (${_controller.vpnList.length})',
             style: const TextStyle(
@@ -34,7 +34,7 @@ class LocationScreen extends StatelessWidget {
             right: 10,
           ),
           child: FloatingActionButton(
-            backgroundColor: Colors.blue,
+            backgroundColor: Theme.of(context).bottomNav,
             onPressed: () => _controller.getVpnData(),
             child: const Icon(
               CupertinoIcons.refresh,
@@ -44,9 +44,9 @@ class LocationScreen extends StatelessWidget {
         ),
 
         body: _controller.isLoading.value
-            ? _loadingWidget()
+            ? _loadingWidget(context)
             : _controller.vpnList.isEmpty
-                ? _noVPNFound()
+                ? _noVPNFound(context)
                 : _vpnData(),
       ),
     );
@@ -66,33 +66,39 @@ class LocationScreen extends StatelessWidget {
         ),
       );
 
-  _loadingWidget() => SizedBox(
+  _loadingWidget(BuildContext context) => SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //lottie animation
-            LottieBuilder.asset('assets/lottie/loading.json',
-                width: mq.width * .7),
+            LottieBuilder.asset(
+              'assets/lottie/loading.json',
+              width: mq.width * .7,
+            ),
 
             //text
-            const Text(
-              'Loading VPNs... 😌',
+            Text(
+              'Loading VPNs...',
               style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold),
+                fontSize: 18,
+                color: Theme.of(context).lightText,
+                fontWeight: FontWeight.bold,
+              ),
             )
           ],
         ),
       );
 
-  _noVPNFound() => const Center(
+  _noVPNFound(BuildContext context) => Center(
         child: Text(
-          'VPNs Not Found! 😔',
+          'VPNs Not Found!',
           style: TextStyle(
-              fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
+            fontSize: 18,
+            color: Theme.of(context).lightText,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       );
 }

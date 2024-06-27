@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/screens/location_screen.dart';
 import 'package:nomadnetshield/widgets/count_down_timer.dart';
 import 'package:nomadnetshield/widgets/home_card.dart';
@@ -26,7 +27,6 @@ class HomeScreen extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
         leading: const Icon(
           CupertinoIcons.home,
           color: Colors.white,
@@ -39,9 +39,14 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              CupertinoIcons.brightness,
+            onPressed: () {
+              Get.changeThemeMode(
+                Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+              );
+              Pref.isDarkMode = !Pref.isDarkMode;
+            },
+            icon: Icon(
+              Get.isDarkMode ? CupertinoIcons.brightness : CupertinoIcons.moon,
               color: Colors.white,
               size: 26,
             ),
@@ -57,7 +62,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: _changeLocation(),
+      bottomNavigationBar: _changeLocation(context),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -231,32 +236,32 @@ class HomeScreen extends StatelessWidget {
           // Countdown Timer
           Obx(
             () => CountDownTimer(
-                startTimer:
-                    _controller.vpnState.value == VpnEngine.vpnConnected),
+              startTimer: _controller.vpnState.value == VpnEngine.vpnConnected,
+            ),
           ),
         ],
       );
 }
 
-Widget _changeLocation() => SafeArea(
+Widget _changeLocation(BuildContext context) => SafeArea(
       child: Semantics(
         child: InkWell(
           onTap: () => Get.to(
             () => LocationScreen(),
           ),
           child: Container(
-            color: Colors.blue,
+            color: Theme.of(context).bottomNav,
             padding: EdgeInsets.symmetric(horizontal: mq.width * .04),
             height: 60,
-            child: const Row(
+            child: Row(
               children: [
-                Icon(
+                const Icon(
                   CupertinoIcons.globe,
                   color: Colors.white,
                   size: 28,
                 ),
-                SizedBox(width: 10),
-                Text(
+                const SizedBox(width: 10),
+                const Text(
                   'Change Location',
                   style: TextStyle(
                     color: Colors.white,
@@ -264,12 +269,13 @@ Widget _changeLocation() => SafeArea(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Icon(
                     Icons.keyboard_arrow_right_rounded,
-                    color: Colors.blue,
+                    color:
+                        Pref.isDarkMode ? const Color(0xFF0D0F14) : Colors.blue,
                     size: 26,
                   ),
                 ),

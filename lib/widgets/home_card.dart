@@ -40,8 +40,8 @@ class HomeCard extends StatelessWidget {
           //subtitle
           Text(
             subtitle,
-            style: const TextStyle(
-              color: Colors.black54,
+            style: TextStyle(
+              color: Theme.of(context).lightText,
               fontWeight: FontWeight.w500,
               fontSize: 12,
             ),

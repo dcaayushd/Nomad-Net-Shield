@@ -42,14 +42,15 @@ class _SplashScreenState extends State<SplashScreen> {
           Positioned(
             bottom: mq.height * .05,
             width: mq.width,
-            child: const Text(
+            child: Text(
               'MADE BY AAYUSH WITH ♡',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.black87,
-                  letterSpacing: 1,
-                  fontSize: 20,
-                  fontStyle: FontStyle.italic),
+                color: Theme.of(context).lightText,
+                letterSpacing: 1,
+                fontSize: 20,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ),
         ],

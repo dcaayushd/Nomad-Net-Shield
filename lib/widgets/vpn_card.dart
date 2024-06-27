@@ -83,11 +83,13 @@ class VpnCard extends StatelessWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(vpn.numVpnSessions.toString(),
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54)),
+              Text(
+                vpn.numVpnSessions.toString(),
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).lightText),
+              ),
               const SizedBox(width: 4),
               const Icon(
                 CupertinoIcons.person_3,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'helpers/pref.dart';
@@ -8,12 +9,12 @@ import 'screens/splash_screen.dart';
 // GLobal object for accessing device screen size
 late Size mq;
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Enter Full Screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    await Pref.initializeHive();
+  await Pref.initializeHive();
 
   // For setting orientation in portrait only
   SystemChrome.setPreferredOrientations(
@@ -40,12 +41,28 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       // Theme
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         appBarTheme: const AppBarTheme(
+          color: Colors.blue,
+          centerTitle: true,
+          elevation: 3,
+        ),
+      ),
+      themeMode: Pref.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      // Dark Theme
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF0D0F14),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFF0D0F14),
           centerTitle: true,
           elevation: 3,
         ),
       ),
     );
   }
+}
+
+extension AppTheme on ThemeData {
+  Color get lightText => Pref.isDarkMode ? Colors.white70 : Colors.black54;
+  Color get bottomNav => Pref.isDarkMode ? Colors.white12 : Colors.blue;
 }
