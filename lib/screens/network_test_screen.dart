@@ -14,7 +14,7 @@ class NetworkTestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Network Test Screen'),
+        title: const Text('Network Info'),
       ),
 
       //refresh button
