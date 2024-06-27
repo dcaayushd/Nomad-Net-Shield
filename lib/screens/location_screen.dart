@@ -5,8 +5,6 @@ import 'package:lottie/lottie.dart';
 
 import 'package:nomadnetshield/controllers/location_controller.dart';
 import 'package:nomadnetshield/widgets/vpn_card.dart';
-
-import '../helpers/pref.dart';
 import '../main.dart';
 
 class LocationScreen extends StatelessWidget {
