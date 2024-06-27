@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
+import 'package:nomadnetshield/helpers/pref.dart';
 
 import '../apis/apis.dart';
 import '../models/vpn.dart';
 
 class LocationController extends GetxController {
-  List<Vpn> vpnList = [];
+  List<Vpn> vpnList = Pref.vpnList;
 
   final RxBool isLoading = false.obs;
 

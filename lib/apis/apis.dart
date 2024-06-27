@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:csv/csv.dart';
 import 'package:http/http.dart';
+import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/models/vpn.dart';
 
 class APIs {
@@ -29,6 +30,7 @@ class APIs {
       log('\ngetVPNServers: $e');
     }
     vpnList.shuffle();
+    if (vpnList.isNotEmpty) Pref.vpnList = vpnList;
     return vpnList;
     //  log(res.body);
   }

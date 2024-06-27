@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/services/vpn_engine.dart';
 
 import '../controllers/home_controller.dart';
@@ -27,6 +28,7 @@ class VpnCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           controller.vpn.value = vpn;
+          Pref.vpn = vpn;
           Get.back();
           if (controller.vpnState.value == VpnEngine.vpnConnected) {
             VpnEngine.stopVpn();

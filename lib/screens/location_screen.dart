@@ -14,37 +14,42 @@ class LocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
-          appBar: AppBar(
+    if (_controller.vpnList.isEmpty) _controller.getVpnData();
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text(
+            'VPN Locations (${_controller.vpnList.length})',
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+
+        // Refresh Button
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(
+            bottom: 10,
+            right: 10,
+          ),
+          child: FloatingActionButton(
             backgroundColor: Colors.blue,
-            title: Text(
-              'VPN Locations (${_controller.vpnList.length})',
-              style: const TextStyle(color: Colors.white),
+            onPressed: () => _controller.getVpnData(),
+            child: const Icon(
+              CupertinoIcons.refresh,
+              color: Colors.white,
             ),
           ),
+        ),
 
-          // Refresh Button
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(
-              bottom: 10,
-              right: 10,
-            ),
-            child: FloatingActionButton(
-              backgroundColor: Colors.blue,
-              onPressed: () => _controller.getVpnData(),
-              child: const Icon(
-                CupertinoIcons.refresh,
-                color: Colors.white,
-              ),
-            ),
-          ),
-
-          body: _controller.isLoading.value
-              ? _loadingWidget()
-              : _controller.vpnList.isEmpty
-                  ? _noVPNFound()
-                  : _vpnData(),
-        ));
+        body: _controller.isLoading.value
+            ? _loadingWidget()
+            : _controller.vpnList.isEmpty
+                ? _noVPNFound()
+                : _vpnData(),
+      ),
+    );
   }
 
   _vpnData() => ListView.builder(
