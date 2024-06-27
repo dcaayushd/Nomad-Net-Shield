@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:csv/csv.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/models/vpn.dart';
+
+import '../models/ip_details.dart';
 
 class APIs {
   static Future<List<Vpn>> getVpnServers() async {
@@ -32,6 +36,16 @@ class APIs {
     vpnList.shuffle();
     if (vpnList.isNotEmpty) Pref.vpnList = vpnList;
     return vpnList;
-    //  log(res.body);
+  }
+
+  static Future<void> getIPDetails({required Rx<IPDetails> ipData}) async {
+    try {
+      final res = await get(Uri.parse('http://ip-api.com/json/'));
+      final data = jsonDecode(res.body);
+      log(data.toString());
+      ipData.value = IPDetails.fromJson(data);
+    } catch (e) {
+      log('\ngetIPDetail : $e');
+    }
   }
 }
