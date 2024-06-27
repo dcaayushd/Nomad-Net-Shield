@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
       // Theme
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.white,
           color: Colors.blue,
           centerTitle: true,
           elevation: 3,

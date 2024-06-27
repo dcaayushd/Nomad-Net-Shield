@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nomadnetshield/helpers/pref.dart';
 import 'package:nomadnetshield/screens/location_screen.dart';
+import 'package:nomadnetshield/screens/network_test_screen.dart';
 import 'package:nomadnetshield/widgets/count_down_timer.dart';
 import 'package:nomadnetshield/widgets/home_card.dart';
 import '../controllers/home_controller.dart';
@@ -46,14 +47,16 @@ class HomeScreen extends StatelessWidget {
               Pref.isDarkMode = !Pref.isDarkMode;
             },
             icon: Icon(
-              Get.isDarkMode ? CupertinoIcons.brightness : CupertinoIcons.moon,
+              Pref.isDarkMode ? CupertinoIcons.brightness : CupertinoIcons.moon,
               color: Colors.white,
               size: 26,
             ),
           ),
           IconButton(
             padding: const EdgeInsets.only(right: 8),
-            onPressed: () {},
+            onPressed: () => Get.to(
+              () => const NetworkTestScreen(),
+            ),
             icon: const Icon(
               CupertinoIcons.info_circle,
               color: Colors.white,
