@@ -8,6 +8,7 @@ import 'package:nomadnetshield/screens/network_test_screen.dart';
 import 'package:nomadnetshield/widgets/count_down_timer.dart';
 import 'package:nomadnetshield/widgets/home_card.dart';
 import '../controllers/home_controller.dart';
+import '../helpers/ad_helper.dart';
 import '../main.dart';
 
 import '../models/vpn_status.dart';
@@ -41,10 +42,12 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.changeThemeMode(
-                Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark,
-              );
-              Pref.isDarkMode = !Pref.isDarkMode;
+              AdHelper.showInterstitialAd(onComplete: () async {
+                Get.changeThemeMode(
+                  Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                );
+                Pref.isDarkMode = !Pref.isDarkMode;
+              });
             },
             icon: Icon(
               Pref.isDarkMode ? CupertinoIcons.brightness : CupertinoIcons.moon,
