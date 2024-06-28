@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nomadnetshield/helpers/ad_helper.dart';
 import 'package:nomadnetshield/helpers/my_dialogs.dart';
 import 'package:nomadnetshield/helpers/pref.dart';
 
@@ -14,7 +15,7 @@ class HomeController extends GetxController {
 
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
-  void connectToVpn() {
+  void connectToVpn() async {
     ///Stop right here if user not select a vpn
     if (vpn.value.openVPNConfigDataBase64.isEmpty) {
       MyDialogs.info(msg: 'Select a location by clicking  \'Change Location\'');
@@ -33,10 +34,14 @@ class HomeController extends GetxController {
       );
 
       ///Start if stage is disconnected
-      VpnEngine.startVpn(vpnConfig);
+      ///Code to show interstitial ad and then connect to vpn
+      AdHelper.showInterstitialAd(onComplete: () async{
+      await VpnEngine.startVpn(vpnConfig);
+
+      });
     } else {
       ///Stop if stage is "not" disconnected
-      VpnEngine.stopVpn();
+      await VpnEngine.stopVpn();
     }
   }
 
