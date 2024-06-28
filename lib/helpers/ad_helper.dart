@@ -57,7 +57,8 @@ class AdHelper {
       ),
     )..load();
   }
-
+  
+  /// Loads an Rewarded ad.
   static void showRewardedAd({required VoidCallback onComplete}) {
     MyDialogs.showProgress();
     RewardedAd.load(
