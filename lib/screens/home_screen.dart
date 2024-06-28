@@ -2,15 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:nomadnetshield/helpers/pref.dart';
-import 'package:nomadnetshield/screens/location_screen.dart';
-import 'package:nomadnetshield/screens/network_test_screen.dart';
-import 'package:nomadnetshield/widgets/count_down_timer.dart';
-import 'package:nomadnetshield/widgets/home_card.dart';
+import '../helpers/pref.dart';
+import '../screens/location_screen.dart';
+import '../screens/network_test_screen.dart';
+import '../widgets/count_down_timer.dart';
+import '../widgets/home_card.dart';
 import '../controllers/home_controller.dart';
-import '../helpers/ad_helper.dart';
 import '../main.dart';
-
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
@@ -42,12 +40,10 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              AdHelper.showInterstitialAd(onComplete: () async {
-                Get.changeThemeMode(
-                  Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark,
-                );
-                Pref.isDarkMode = !Pref.isDarkMode;
-              });
+              Get.changeThemeMode(
+                Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+              );
+              Pref.isDarkMode = !Pref.isDarkMode;
             },
             icon: Icon(
               Pref.isDarkMode ? CupertinoIcons.brightness : CupertinoIcons.moon,

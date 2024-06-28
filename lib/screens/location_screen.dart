@@ -9,6 +9,7 @@ import 'package:nomadnetshield/controllers/native_ad_controller.dart';
 import 'package:nomadnetshield/helpers/ad_helper.dart';
 import 'package:nomadnetshield/widgets/vpn_card.dart';
 import '../main.dart';
+import '../widgets/watch_ad_dialog.dart';
 
 class LocationScreen extends StatelessWidget {
   LocationScreen({super.key});
@@ -48,7 +49,21 @@ class LocationScreen extends StatelessWidget {
           ),
           child: FloatingActionButton(
             backgroundColor: Theme.of(context).bottomNav,
-            onPressed: () => _controller.getVpnData(),
+            onPressed: () {
+              // Ad Dialog
+              Get.dialog(
+                WatchAdDialog(
+                  onComplete: () {
+                    // Watch an Ad to gain reward
+                    AdHelper.showRewardedAd(
+                      onComplete: () {
+                        _controller.getVpnData();
+                      },
+                    );
+                  },
+                ),
+              );
+            },
             child: const Icon(
               CupertinoIcons.refresh,
               color: Colors.white,

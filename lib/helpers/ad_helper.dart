@@ -57,7 +57,7 @@ class AdHelper {
       ),
     )..load();
   }
-  
+
   /// Loads an Rewarded ad.
   static void showRewardedAd({required VoidCallback onComplete}) {
     MyDialogs.showProgress();
@@ -66,7 +66,6 @@ class AdHelper {
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
-       
           Get.back();
           // ad listener
           ad.show(onUserEarnedReward: (
