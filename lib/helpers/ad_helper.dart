@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:nomadnetshield/controllers/native_ad_controller.dart';
 import 'dart:developer';
 
 import 'package:nomadnetshield/helpers/my_dialogs.dart';
@@ -33,5 +34,27 @@ class AdHelper {
         },
       ),
     );
+  }
+
+  static NativeAd loadNativeAd({required NativeAdController adController}) {
+    return NativeAd(
+      adUnitId: 'ca-app-pub-3940256099942544/2247696110',
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          log('$NativeAd loaded.');
+          adController.adLoaded.value = true;
+        },
+        onAdFailedToLoad: (ad, error) {
+          // Dispose the ad here to free resources.
+          log('$NativeAd failed to load: $error');
+          ad.dispose();
+        },
+      ),
+      request: const AdRequest(),
+      // Styling
+      nativeTemplateStyle: NativeTemplateStyle(
+        templateType: TemplateType.small,
+      ),
+    )..load();
   }
 }

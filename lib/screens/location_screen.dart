@@ -1,19 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:nomadnetshield/controllers/location_controller.dart';
+import 'package:nomadnetshield/controllers/native_ad_controller.dart';
+import 'package:nomadnetshield/helpers/ad_helper.dart';
 import 'package:nomadnetshield/widgets/vpn_card.dart';
 import '../main.dart';
 
 class LocationScreen extends StatelessWidget {
   LocationScreen({super.key});
   final _controller = LocationController();
+  final _adController = NativeAdController();
 
   @override
   Widget build(BuildContext context) {
     if (_controller.vpnList.isEmpty) _controller.getVpnData();
+    _adController.ad = AdHelper.loadNativeAd(adController: _adController);
     return Obx(
       () => Scaffold(
         appBar: AppBar(
@@ -24,6 +29,16 @@ class LocationScreen extends StatelessWidget {
             ),
           ),
         ),
+
+        bottomNavigationBar:
+            _adController.ad != null && _adController.adLoaded.isTrue
+                ? SafeArea(
+                    child: SizedBox(
+                      height: 85,
+                      child: AdWidget(ad: _adController.ad!),
+                    ),
+                  )
+                : null,
 
         // Refresh Button
         floatingActionButton: Padding(
