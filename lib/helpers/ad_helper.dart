@@ -57,4 +57,30 @@ class AdHelper {
       ),
     )..load();
   }
+
+  static void showRewardedAd({required VoidCallback onComplete}) {
+    MyDialogs.showProgress();
+    RewardedAd.load(
+      adUnitId: 'ca-app-pub-3940256099942544/5224354917',
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+       
+          Get.back();
+          // ad listener
+          ad.show(onUserEarnedReward: (
+            AdWithoutView ad,
+            RewardItem rewardItem,
+          ) {
+            onComplete;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          Get.back();
+          log('Failed to load an interstitial ad: ${err.message}');
+          onComplete();
+        },
+      ),
+    );
+  }
 }

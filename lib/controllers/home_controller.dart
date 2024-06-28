@@ -35,7 +35,8 @@ class HomeController extends GetxController {
 
       ///Start if stage is disconnected
       ///Code to show interstitial ad and then connect to vpn
-      AdHelper.showInterstitialAd(onComplete: () async {
+
+      AdHelper.showRewardedAd(onComplete: () async {
         await VpnEngine.startVpn(vpnConfig);
       });
     } else {
