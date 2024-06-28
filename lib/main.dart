@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:nomadnetshield/helpers/ad_helper.dart';
 
 import 'helpers/pref.dart';
 import 'screens/splash_screen.dart';
@@ -15,7 +16,7 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
   await Pref.initializeHive();
-
+  await AdHelper.initAds();
   // For setting orientation in portrait only
   SystemChrome.setPreferredOrientations(
     [
