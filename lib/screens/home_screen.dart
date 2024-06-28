@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                       : _controller.vpn.value.countryLong,
                   subtitle: 'FREE',
                   icon: CircleAvatar(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: const Color(0XFF021B3A),
                     radius: 30,
                     backgroundImage: _controller.vpn.value.countryLong.isEmpty
                         ? null
@@ -140,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                   title: snapshot.data?.byteOut ?? '0 kbps',
                   subtitle: 'UPLOAD',
                   icon: const CircleAvatar(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0XFF021B3A),
                     radius: 30,
                     child: Icon(
                       Icons.arrow_upward,
@@ -223,7 +223,7 @@ class HomeScreen extends StatelessWidget {
               horizontal: 16,
             ),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: const Color(0XFF021B3A),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
@@ -277,8 +277,9 @@ Widget _changeLocation(BuildContext context) => SafeArea(
                   backgroundColor: Colors.white,
                   child: Icon(
                     Icons.keyboard_arrow_right_rounded,
-                    color:
-                        Pref.isDarkMode ? const Color(0xFF0D0F14) : Colors.blue,
+                    color: Pref.isDarkMode
+                        ? const Color(0xFF0D0F14)
+                        : const Color(0XFF021B3A),
                     size: 26,
                   ),
                 ),

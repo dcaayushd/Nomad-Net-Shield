@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           foregroundColor: Colors.white,
-          color: Colors.blue,
+          color: Color(0XFF021B3A),
           centerTitle: true,
           elevation: 3,
         ),
@@ -66,5 +66,6 @@ class MyApp extends StatelessWidget {
 
 extension AppTheme on ThemeData {
   Color get lightText => Pref.isDarkMode ? Colors.white70 : Colors.black54;
-  Color get bottomNav => Pref.isDarkMode ? Colors.white12 : Colors.blue;
+  Color get bottomNav =>
+      Pref.isDarkMode ? Colors.white12 : const Color(0XFF021B3A);
 }

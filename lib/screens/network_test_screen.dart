@@ -57,7 +57,7 @@ class NetworkTestScreen extends StatelessWidget {
                 subtitle: ipData.value.query,
                 icon: const Icon(
                   CupertinoIcons.location_solid,
-                  color: Colors.blue,
+                  color: Color(0XFF021B3A),
                 ),
               ),
             ),

@@ -35,9 +35,8 @@ class HomeController extends GetxController {
 
       ///Start if stage is disconnected
       ///Code to show interstitial ad and then connect to vpn
-      AdHelper.showInterstitialAd(onComplete: () async{
-      await VpnEngine.startVpn(vpnConfig);
-
+      AdHelper.showInterstitialAd(onComplete: () async {
+        await VpnEngine.startVpn(vpnConfig);
       });
     } else {
       ///Stop if stage is "not" disconnected
@@ -49,7 +48,7 @@ class HomeController extends GetxController {
   Color get getButtonColor {
     switch (vpnState.value) {
       case VpnEngine.vpnDisconnected:
-        return Colors.blue;
+        return Pref.isDarkMode ? Colors.blueAccent : const Color(0XFF021B3D);
 
       case VpnEngine.vpnConnected:
         return Colors.green;
