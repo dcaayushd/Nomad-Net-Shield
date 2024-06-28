@@ -67,7 +67,7 @@ class AdHelper {
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
           Get.back();
-          // ad listener
+          // rewarded ad listener
           ad.show(onUserEarnedReward: (
             AdWithoutView ad,
             RewardItem rewardItem,
@@ -78,7 +78,7 @@ class AdHelper {
         onAdFailedToLoad: (err) {
           Get.back();
           log('Failed to load an interstitial ad: ${err.message}');
-          onComplete();
+          // onComplete();
         },
       ),
     );

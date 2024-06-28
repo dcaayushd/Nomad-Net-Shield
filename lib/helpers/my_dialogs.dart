@@ -34,8 +34,9 @@ class MyDialogs {
 
   static showProgress() {
     Get.dialog(
-      const Center(
+      Center(
         child: CircularProgressIndicator(
+          color: Pref.isDarkMode ? Colors.white : const Color(0xFF0D0F14),
           strokeWidth: 2,
         ),
       ),

@@ -53,11 +53,11 @@ class LocationScreen extends StatelessWidget {
               // Ad Dialog
               Get.dialog(
                 WatchAdDialog(
-                  onComplete: () {
-                    // Watch an Ad to gain reward
+                  onComplete: () async {
+                    // Watch an ad to gain reward
                     AdHelper.showRewardedAd(
-                      onComplete: () {
-                        _controller.getVpnData();
+                      onComplete: () async {
+                        await _controller.getVpnData();
                       },
                     );
                   },
