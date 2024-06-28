@@ -35,7 +35,7 @@ class AdHelper {
       ),
     );
   }
-
+  /// Loads an Native ad.
   static NativeAd loadNativeAd({required NativeAdController adController}) {
     return NativeAd(
       adUnitId: 'ca-app-pub-3940256099942544/2247696110',
