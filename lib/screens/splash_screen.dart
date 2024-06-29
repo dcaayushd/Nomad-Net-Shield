@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/route_manager.dart';
+import 'package:nomadnetshield/helpers/ad_helper.dart';
 import '../main.dart';
 import 'home_screen.dart';
 
@@ -18,6 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(milliseconds: 1000), () {
       // Exit full screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      AdHelper.preCacheInterstitialAd();
+      AdHelper.preCacheNativeAd();
       // Navigate to home
       Get.off(() => HomeScreen());
     });
