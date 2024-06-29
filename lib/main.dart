@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 // import 'package:nomadnetshield/firebase_options.dart';
 import 'package:nomadnetshield/helpers/ad_helper.dart';
+import 'package:nomadnetshield/helpers/config.dart';
 
 import 'helpers/pref.dart';
 import 'screens/splash_screen.dart';
@@ -16,10 +17,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Enter Full Screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
+  // Firebase Initialization
   await Firebase.initializeApp();
-
+  // Remote Config Initialization
+  await Config.initConfig();
+  // Hive Initialization
   await Pref.initializeHive();
+  // Ads Initialization
   await AdHelper.initAds();
   // For setting orientation in portrait only
   SystemChrome.setPreferredOrientations(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nomadnetshield/controllers/native_ad_controller.dart';
+import 'package:nomadnetshield/helpers/config.dart';
 import 'dart:developer';
 
 import 'package:nomadnetshield/helpers/my_dialogs.dart';
@@ -14,8 +15,9 @@ class AdHelper {
   /// Loads an interstitial ad.
   static void showInterstitialAd({required VoidCallback onComplete}) {
     MyDialogs.showProgress();
+    log('Interstitial Ad Id: ${Config.interstitialAd}');
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      adUnitId: Config.interstitialAd,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -37,8 +39,9 @@ class AdHelper {
   }
   /// Loads an Native ad.
   static NativeAd loadNativeAd({required NativeAdController adController}) {
+    log('Native Ad Id: ${Config.nativeAd}');
     return NativeAd(
-      adUnitId: 'ca-app-pub-3940256099942544/2247696110',
+      adUnitId: Config.nativeAd,
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           log('$NativeAd loaded.');
@@ -60,9 +63,11 @@ class AdHelper {
 
   /// Loads an Rewarded ad.
   static void showRewardedAd({required VoidCallback onComplete}) {
+    log('Rewarded Ad Id: ${Config.rewardedAd}');
+
     MyDialogs.showProgress();
     RewardedAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/5224354917',
+      adUnitId: Config.rewardedAd,
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
