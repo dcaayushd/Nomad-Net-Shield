@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "157211170545",
+    "project_id": "nomadnetshield",
+    "storage_bucket": "nomadnetshield.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157211170545:android:d96f5bc1cfca01c8a4fb50",
+        "android_client_info": {
+          "package_name": "com.codepluscircle.nomadnetshield"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNAeZ3-5X2YhAdFUtQQd5MoM4ZVqgZSZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+// import 'package:nomadnetshield/firebase_options.dart';
 import 'package:nomadnetshield/helpers/ad_helper.dart';
 
 import 'helpers/pref.dart';
@@ -14,6 +16,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Enter Full Screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
+  await Firebase.initializeApp();
 
   await Pref.initializeHive();
   await AdHelper.initAds();
