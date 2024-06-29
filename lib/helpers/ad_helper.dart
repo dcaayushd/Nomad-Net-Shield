@@ -12,10 +12,21 @@ class AdHelper {
     await MobileAds.instance.initialize();
   }
 
+  // static InterstitialAd? _interstitialAd;
+  // static bool _interstitialAdLoaded = false;
+
+  // static NativeAd? _nativeAd;
+  // static bool _nativeAdLoaded = false;
+
   /// Loads an interstitial ad.
   static void showInterstitialAd({required VoidCallback onComplete}) {
-    MyDialogs.showProgress();
     log('Interstitial Ad Id: ${Config.interstitialAd}');
+    if (Config.hideAds) {
+      onComplete();
+      return;
+    }
+
+    MyDialogs.showProgress();
     InterstitialAd.load(
       adUnitId: Config.interstitialAd,
       request: const AdRequest(),
@@ -37,9 +48,13 @@ class AdHelper {
       ),
     );
   }
+
   /// Loads an Native ad.
-  static NativeAd loadNativeAd({required NativeAdController adController}) {
+  static NativeAd? loadNativeAd({required NativeAdController adController}) {
     log('Native Ad Id: ${Config.nativeAd}');
+    if (Config.hideAds) {
+      return null;
+    }
     return NativeAd(
       adUnitId: Config.nativeAd,
       listener: NativeAdListener(
@@ -64,7 +79,10 @@ class AdHelper {
   /// Loads an Rewarded ad.
   static void showRewardedAd({required VoidCallback onComplete}) {
     log('Rewarded Ad Id: ${Config.rewardedAd}');
-
+    if (Config.hideAds) {
+      onComplete();
+      return;
+    }
     MyDialogs.showProgress();
     RewardedAd.load(
       adUnitId: Config.rewardedAd,

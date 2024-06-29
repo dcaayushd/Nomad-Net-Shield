@@ -39,4 +39,5 @@ class Config {
   static String get interstitialAd => _config.getString('interstitial_ad');
   static String get rewardedAd => _config.getString('rewarded_ad');
 
+  static bool get hideAds => !_showAd;
 }

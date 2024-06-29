@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nomadnetshield/controllers/location_controller.dart';
 import 'package:nomadnetshield/controllers/native_ad_controller.dart';
 import 'package:nomadnetshield/helpers/ad_helper.dart';
+// import 'package:nomadnetshield/helpers/config.dart';
 import 'package:nomadnetshield/widgets/vpn_card.dart';
 import '../main.dart';
 // import '../widgets/watch_ad_dialog.dart';
@@ -32,6 +33,7 @@ class LocationScreen extends StatelessWidget {
         ),
 
         bottomNavigationBar:
+            // Config.hideAds ? null :
             _adController.ad != null && _adController.adLoaded.isTrue
                 ? SafeArea(
                     child: SizedBox(
@@ -50,9 +52,7 @@ class LocationScreen extends StatelessWidget {
           child: FloatingActionButton(
             backgroundColor: Theme.of(context).bottomNav,
             onPressed: () {
-        
               _controller.getVpnData();
-
             },
             child: const Icon(
               CupertinoIcons.refresh,
