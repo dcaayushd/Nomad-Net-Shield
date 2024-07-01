@@ -41,7 +41,7 @@ To install Nomad Net Shield, follow these steps:
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). See the License file for details.
+This project is licensed under the MIT License. See the [License](LICENSE) file for details.
 
 ## Contact
 
