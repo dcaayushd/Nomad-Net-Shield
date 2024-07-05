@@ -31,7 +31,7 @@ The following dependencies are used in Nomad Net Shield:
 To install Nomad Net Shield, follow these steps:
 
 1. Clone the repository:
-`git clone https://github.com/yourusername/nomad-net-shield.git`
+`git clone https://github.com/dcaayushd/Nomad-Net-Shield.git`
 2. Navigate to the project directory:
 `cd nomad-net-shield`
 3. Install the dependencies:
